@@ -14,7 +14,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^1.2.1",
     "core-js": "^3.6.5",
-    "nodejs": "^0.0.0",
+    "npx": "^10.2.2",
     "quasar": "^1.0.0"
   },
   "devDependencies": {

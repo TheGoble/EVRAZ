@@ -5,16 +5,25 @@
             <q-btn class="button" color="secondary" @click="showWindow">Добавить пользователя</q-btn>
             <q-dialog v-model="showDialog">
             <q-card>
-                <q-card-section>
+                <q-card-section class="add_user">
                    Добавьте пользователя
                 </q-card-section>
                 <q-card-section>
-                    <q-input class="input_body" standout="bg-secondary text-white" v-model="message.body" label="Email" />
-                    <q-input class="input_body" standout="bg-secondary text-white" v-model="message.body" label="Номер телефона" />
-                    <q-input class="input_subject" standout="bg-secondary text-white" v-model="message.subject" label="ФИО" />
-                    <q-input class="input_body" standout="bg-secondary text-white" v-model="message.body" label="Номер цеха" />
-                    <q-input class="input_body" standout="bg-secondary text-white" v-model="message.body" label="Номер участка" />
-                    галочки
+                    <q-input class="input_email" standout="bg-secondary text-white" v-model="message.email" label="Email" />
+                    <q-input class="input_phone" standout="bg-secondary text-white" v-model="message.phone" label="Номер телефона" />
+                    <q-input class="input_FIO" standout="bg-secondary text-white" v-model="message.FIO" label="ФИО" />
+                    <q-input class="input_workshop" standout="bg-secondary text-white" v-model="message.workshop" label="Номер цеха" />
+                    <q-input class="input_line" standout="bg-secondary text-white" v-model="message.line" label="Номер участка" />
+                    <div class="q-pd-md">
+                        <div class="q-gutter-sm">
+                            <q-checkbox color="secondary" v-model="chief_workshop" val="1" label="Начальник цеха" />
+                            <q-checkbox color="secondary" v-model="chief_line" val="1" label="Начальник участка" />
+                            <div class="q-px-sm">
+                                <strong>{{ chief_workshop }}</strong>
+                                <strong>{{ chief_line }}</strong>
+                            </div>
+                        </div> 
+                    </div>
                 </q-card-section>
                 <q-card-actions>
                 <q-btn color="secondary" label="Закрыть" @click="closeWindow" />
@@ -24,7 +33,7 @@
             </q-dialog>
         </div>
         <q-table
-            title="Шаблон сообщений"
+            title="Список пользователей"
             :data="data"
             :columns="columns"
             row-key="name"
@@ -35,15 +44,20 @@
 
 <script>
 export default {
-    
     data () {
     return { 
+        chief_workshop: [],
+        chief_line: [],
         showDialog: false,
         data: [],
         message: {
-            subject: '',
-            body: '',
-            sensor: null,
+            email: '',
+            phone: '',
+            FIO: '',
+            workshop: '',
+            line: '',
+            chief_workshop: [],
+            chief_line: [],
         },
         columns: [
             {
@@ -55,16 +69,12 @@ export default {
             format: val => `${val}`,
             },
             { name: 'email', align: 'center', label: 'Email', field: 'email'} ,
-            { name: 'Phone', label: 'Номер телефона', field: 'phone'},
-            { name: 'FIO', label: 'ФИО', field: 'FIO' },
-            { name: 'Number_shop', label: 'Номер цеха', field: 'Number_shop' },
-            { name: 'Number_plot', label: 'Номер участа', field: 'Number_plot' },
-            // { name: 'Number_plot', label: 'Номер участа', field: 'Number_plot' },
-        ],
-        options: [
-            {
-                sensorName: 'Датчик 1',
-            }
+            { name: 'Phone', align: 'center', label: 'Номер телефона', field: 'phone'},
+            { name: 'FIO', align: 'center', label: 'ФИО', field: 'FIO' },
+            { name: 'Number_shop', align: 'center', label: 'Номер цеха', field: 'workshop' },
+            { name: 'Number_line', align: 'center', label: 'Номер участка', field: 'line' },
+            { name: 'chief_workshop', align: 'center', label: 'Начальник цеха', field: 'chief_workshop' },
+            { name: 'chief_line', align: 'center', label: 'Начальник участка', field: 'chief_line' },
         ],
     };
     },
@@ -74,11 +84,14 @@ export default {
         },
         closeWindow() {
         this.showDialog = false;
-        this.message.subject = '';
-        this.message.body = '';
-        this.message.sensor = null;
+        this.message.email = '';
+        this.message.phone = '';
+        this.message.FIO = '';
+        this.message.workshop = '';
+        this.message.line = '';
         },
         addMessage() {
+            this.chief_workshop.push('y')
             this.data.push({
                 name: this.data.length + 1,
                 ...this.message,
@@ -89,15 +102,32 @@ export default {
 }
 </script>
 
-<style>
+<style> 
+.add_user{
+    font-family: inherit;
+    font-size: 2vh;
+}
+.q-pd-md{
+    font-family: inherit;
+    font-size: 2vh;
+}
 .button{
     margin-top: 3vh;
     margin-bottom: 5vh;
 }
-.input_subject{
+.input_email{
     margin-bottom: 2vh;
 }
-.input_body{
+.input_phone{
+    margin-bottom: 2vh;
+}
+.input_FIO{
+    margin-bottom: 2vh;
+}
+.input_workshop{
+    margin-bottom: 2vh;
+}
+.input_line{
     margin-bottom: 2vh;
 }
 </style>    
