@@ -297,6 +297,7 @@ header{
   justify-content: space-between;
 }
 .foto2{
+  margin-left: 5vh;
   margin-right: 7vh;
   margin-top: 5vh;
   width: 100vh;
@@ -339,7 +340,7 @@ header{
 }
 .body{
   width: 1500px;
-  height: 2500px;
+  height: 2700px;
   background-color: white;
   box-shadow: 0 0 15px rgba(0,0,0,0.5); 
 }
