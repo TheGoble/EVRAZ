@@ -3,7 +3,7 @@
         <div class="q-pa-md">
         <div>
             <q-btn class="button" color="secondary" @click="showWindow">Добавить пользователя</q-btn>
-            <q-dialog v-model="showDialog">
+            <q-dialog v-model="showDialog" @before-hide="closeWindow">
             <q-card>
                 <q-card-section class="add_user">
                    Добавьте пользователя
@@ -16,12 +16,8 @@
                     <q-input class="input_line" standout="bg-secondary text-white" v-model="message.line" label="Номер участка" />
                     <div class="q-pd-md">
                         <div class="q-gutter-sm">
-                            <q-checkbox color="secondary" v-model="chief_workshop" val="1" label="Начальник цеха" />
-                            <q-checkbox color="secondary" v-model="chief_line" val="1" label="Начальник участка" />
-                            <div class="q-px-sm">
-                                <strong>{{ chief_workshop }}</strong>
-                                <strong>{{ chief_line }}</strong>
-                            </div>
+                            <q-checkbox color="secondary" v-model="message.chief_workshop" label="Начальник цеха" />
+                            <q-checkbox color="secondary" v-model="message.chief_line" label="Начальник участка" />
                         </div> 
                     </div>
                 </q-card-section>
@@ -46,8 +42,8 @@
 export default {
     data () {
     return { 
-        chief_workshop: [],
-        chief_line: [],
+        chief_workshop: false,
+        chief_line: false,
         showDialog: false,
         data: [],
         message: {
@@ -56,8 +52,8 @@ export default {
             FIO: '',
             workshop: '',
             line: '',
-            chief_workshop: [],
-            chief_line: [],
+            chief_workshop: false,
+            chief_line: false,
         },
         columns: [
             {
@@ -73,8 +69,8 @@ export default {
             { name: 'FIO', align: 'center', label: 'ФИО', field: 'FIO' },
             { name: 'Number_shop', align: 'center', label: 'Номер цеха', field: 'workshop' },
             { name: 'Number_line', align: 'center', label: 'Номер участка', field: 'line' },
-            { name: 'chief_workshop', align: 'center', label: 'Начальник цеха', field: 'chief_workshop' },
-            { name: 'chief_line', align: 'center', label: 'Начальник участка', field: 'chief_line' },
+            { name: 'chief_workshop', align: 'center', label: 'Начальник цеха', field: 'chief_workshop', format: value => value ? 'Да' : 'Нет' },
+            { name: 'chief_line', align: 'center', label: 'Начальник участка', field: 'chief_line', format: value => value ? 'Да' : 'Нет'  },
         ],
     };
     },
@@ -89,9 +85,10 @@ export default {
         this.message.FIO = '';
         this.message.workshop = '';
         this.message.line = '';
+        this.message.chief_workshop = false;
+        this.message.chief_line = false;
         },
         addMessage() {
-            this.chief_workshop.push('y')
             this.data.push({
                 name: this.data.length + 1,
                 ...this.message,
