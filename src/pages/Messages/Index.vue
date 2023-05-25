@@ -62,11 +62,14 @@ export default {
             },
             { name: 'Subject', align: 'center', label: 'Тема сообщения', field: 'subject'},
             { name: 'Body', label: 'Тело сообщения', field: 'body'},
-            { name: 'Sensor', label: 'Датчик', field: 'sensor' },
+            { name: 'sensor', label: 'Датчик', field: 'sensor' },
         ],
         options: [
             {
                 sensorName: 'Датчик 1',
+            },
+            {
+                sensorName: 'Датчик 2',
             }
         ],
     };
@@ -85,9 +88,24 @@ export default {
             this.data.push({
                 name: this.data.length + 1,
                 ...this.message,
+                sensor: this.generateSensors(this.message.sensor),
             })
+            
             this.closeWindow();
         },
+        generateSensors(sensors) {
+            let sensorsList = ''
+            for (let i = 0; i < sensors.length; i++) {
+                if (i === sensors.length - 1) {
+                    sensorsList += `${sensors[i].sensorName}`
+                }
+                else {
+                    sensorsList += `${sensors[i].sensorName}; `
+                }
+                
+            }
+            return sensorsList
+        }
     },
 }
     
