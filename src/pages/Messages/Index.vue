@@ -70,6 +70,9 @@ export default {
             },
             {
                 sensorName: 'Датчик 2',
+            },
+            {
+                sensorName: 'Датчик 3',
             }
         ],
     };
